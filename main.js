@@ -1,4 +1,4 @@
-const computerPlay = function() {
+function computerPlay() {
     let computerOption = Math.floor(Math.random() * 3) + 1;
 
     if (computerOption === 1)
