@@ -9,64 +9,63 @@ function computerPlay() {
         return "scissor";
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound(e) {
     // if player loses it returns 0 otherwise 1
-    // if their is a tie just returns 
+    // if their is a tie just returns
+
+    let playerSelection = e.target.classList.value;
+    let computerSelection = computerPlay();
+
+    display.textContent = `${playerSelection.toUpperCase()} vs ${computerSelection.toUpperCase()}`;
     
-    if (playerSelection === computerSelection) {
-        return;
+    if ((computer === 5) || (player === 5)) {
+        if (computer > player) {
+            display.textContent = "COMPUTER WINS";
+            return;
+        } else if (player > computer) {
+            display.textContent = "PLAYER WINS";
+            return;
+        } else {
+            display.textContent = "TIE";
+            return;
+        }
     }
+
+    if (playerSelection === computerSelection) return;
 
     if (playerSelection === "rock") {
         if (computerSelection === "paper") {
-            return 0;
+            computer++;
         } else {
-            return 1;
+            player++;
         }
     }
 
     if (playerSelection === "paper") {
         if (computerSelection === "scissor") {
-            return 0;
+            computer++;
         } else {
-            return 1;
+            player++;
         }
     }
 
     if (playerSelection === "scissor") {
         if (computerSelection === "rock") {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-}
-
-function game() {
-    let playerSelection, computerSelection;
-    let player = 0;
-    let computer = 0;
-
-    for (let i = 0; i < 5; i++) {
-        playerSelection = prompt("Enter [Rock/Paper/Scissor]");
-        computerSelection = computerPlay();
-        
-        let result = playRound(playerSelection.toLowerCase(), computerSelection);
-        
-        if (result === 1) {
-            player++;
-        } else if (result === 0){
             computer++;
+        } else {
+            player++;
         }
     }
 
-    if (player > computer) {
-        console.log(`You Win! Player = ${player} | Computer = ${computer}`);
-    } else if (player < computer) {
-        console.log(`You Lose! Player = ${player} | Computer = ${computer}`);
-    } else {
-        console.log(`Tie! Player = ${player} | Computer = ${computer}`);
-    }
+    playerScore.textContent = `PLAYER: ${player}`;
+    computerScore.textContent = `COMPUTER: ${computer}`;
 }
 
-game();
+const btns = Array.from(document.querySelectorAll("button"));
+btns.forEach((btn) => btn.addEventListener("click", playRound));
+const display = document.querySelector(".display");
+const playerScore = document.querySelector(".player");
+const computerScore = document.querySelector(".computer");
+
+let player = 0;
+let computer = 0;
